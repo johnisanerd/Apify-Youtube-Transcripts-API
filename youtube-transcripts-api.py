@@ -37,7 +37,8 @@ def main():
         print(item)
 
 if __name__ == "__main__":
-    for run in range(1, 50):
-        print(f"Running for {run} times")
-        main()
+    # for run in range(1, 50):
+    #    print(f"Running for {run} times")
+    #    main()
+    main()
 

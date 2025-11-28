@@ -1,11 +1,11 @@
-[# YouTube Transcript Getter – Priced Per Video](https://apify.com/johnvc/youtubetranscripts)
+[# YouTube Transcript Getter – Priced Per Video](https://apify.com/johnvc/youtubetranscripts?fpr=9n7kx3)
 
 ## 🎬 YouTube Transcript Getter – Priced Per Video
 
 > **Extract YouTube transcripts effortlessly with full metadata and per‑video pricing.**
 
 This repository provides a Python example for running the Apify Actor  
-[`johnvc/youtubetranscripts`](https://apify.com/johnvc/youtubetranscripts) via the Apify Python client.
+[`johnvc/youtubetranscripts`](https://apify.com/johnvc/youtubetranscripts?fpr=9n7kx3) via the Apify Python client.
 It is ideal for:
 
 - **Content creators** who need ready‑to‑use transcripts for repurposing content.
@@ -13,7 +13,7 @@ It is ideal for:
 - **Researchers and developers** who need timestamped and non‑timestamped captions with language metadata.
 
 You can run this Actor in the Apify cloud with **pay‑per‑event (per‑video) pricing**, making it very inexpensive for both single and batch use cases:  
-[`YouTube Transcript Getter – Priced Per Video`](https://apify.com/johnvc/youtubetranscripts).
+[`YouTube Transcript Getter – Priced Per Video`](https://apify.com/johnvc/youtubetranscripts?fpr=9n7kx3).
 
 ---
 
@@ -58,7 +58,7 @@ echo 'APIFY_API_TOKEN=your_api_token_here' > .env
 ```
 
 You can get your API token from your Apify account dashboard:  
-[`https://apify.com`](https://apify.com).
+[`https://apify.com`](https://apify.com?fpr=9n7kx3).
 
 Alternatively, set the environment variable directly:
 
@@ -88,7 +88,7 @@ The script will:
 
 ## 💡 What is the `johnvc/youtubetranscripts` Actor?
 
-The [`johnvc/youtubetranscripts`](https://apify.com/johnvc/youtubetranscripts) Actor (YouTube Transcript Getter – Priced Per Video) extracts transcripts from YouTube videos with rich metadata.  
+The [`johnvc/youtubetranscripts`](https://apify.com/johnvc/youtubetranscripts?fpr=9n7kx3) Actor (YouTube Transcript Getter – Priced Per Video) extracts transcripts from YouTube videos with rich metadata.  
 According to the Actor documentation, it:
 
 - Supports **regular YouTube videos**, **YouTube Shorts**, and various URL formats.
@@ -105,7 +105,7 @@ Example minimal input for a single video:
 ```
 
 For full details, pricing, and the most up‑to‑date information, see the Apify Actor page:  
-[`https://apify.com/johnvc/youtubetranscripts`](https://apify.com/johnvc/youtubetranscripts).
+[`https://apify.com/johnvc/youtubetranscripts`](https://apify.com/johnvc/youtubetranscripts?fpr=9n7kx3).
 
 ---
 
@@ -134,7 +134,7 @@ Below are some sample inputs you can use when running the Actor directly in Apif
 ```
 
 > **Note**: The examples above are taken directly from the Actor documentation on Apify:  
-> [`https://apify.com/johnvc/youtubetranscripts`](https://apify.com/johnvc/youtubetranscripts).
+> [`https://apify.com/johnvc/youtubetranscripts`](https://apify.com/johnvc/youtubetranscripts?fpr=9n7kx3).
 
 ---
 

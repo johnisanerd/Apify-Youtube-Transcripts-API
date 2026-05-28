@@ -178,4 +178,4 @@ For more about datasets and exports, see Apify documentation:
 
 Turn any YouTube content into structured, searchable text with the YouTube Transcripts API powered by Apify.  
 
-Last Updated: 2025.11.27
+Last Updated: 2026.05.29

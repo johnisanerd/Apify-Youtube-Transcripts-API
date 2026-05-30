@@ -1,181 +1,272 @@
-[# YouTube Transcript Getter – Priced Per Video](https://apify.com/johnvc/youtubetranscripts?fpr=9n7kx3)
+# 🎬 YouTube Transcripts API: Captions and Subtitles in Clean JSON
 
-## 🎬 YouTube Transcript Getter – Priced Per Video
+> The efficient, reliable, and developer-friendly way to use the YouTube Transcripts API.
 
-> **Extract YouTube transcripts effortlessly with full metadata and per‑video pricing.**
+**Actor page:** [apify.com/johnvc/YoutubeTranscripts](https://apify.com/johnvc/YoutubeTranscripts?fpr=9n7kx3)
+**Input schema:** [apify.com/johnvc/YoutubeTranscripts/input-schema](https://apify.com/johnvc/YoutubeTranscripts/input-schema?fpr=9n7kx3)
 
-This repository provides a Python example for running the Apify Actor  
-[`johnvc/youtubetranscripts`](https://apify.com/johnvc/youtubetranscripts?fpr=9n7kx3) via the Apify Python client.
-It is ideal for:
+The YouTube Transcripts API extracts the transcript for one or more YouTube videos and returns clean, structured JSON. Each video comes back with a timestamped caption list (text, start, and duration), a plain-text version of the full transcript, and language metadata. It works with standard videos, Shorts, youtu.be short links, embed URLs, and mobile URLs, processes multiple URLs in parallel, and is billed per video.
 
-- **Content creators** who need ready‑to‑use transcripts for repurposing content.
-- **SEO and marketing teams** who want full text versions of videos for indexing and analysis.
-- **Researchers and developers** who need timestamped and non‑timestamped captions with language metadata.
+## Video Walkthrough
 
-You can run this Actor in the Apify cloud with **pay‑per‑event (per‑video) pricing**, making it very inexpensive for both single and batch use cases:  
-[`YouTube Transcript Getter – Priced Per Video`](https://apify.com/johnvc/youtubetranscripts?fpr=9n7kx3).
+[![Watch the walkthrough](https://img.youtube.com/vi/jREWahDGhJM/maxresdefault.jpg)](https://www.youtube.com/watch?v=jREWahDGhJM)
 
----
+## Quick Start
 
-### 🚀 Quick Start
+### Prerequisites
+- Python 3.11 or higher
+- An Apify account and API key ([get a free key here](https://apify.com?fpr=9n7kx3))
 
-#### Prerequisites
-- **Python** 3.8 or higher
-- An **Apify account** and **API token**
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/johnisanerd/Apify-Youtube-Transcripts-API.git
+   cd Apify-Youtube-Transcripts-API
+   ```
 
-#### 1. Clone the repository
+2. **Install dependencies with UV**
+   ```bash
+   # Install UV if you do not have it:
+   curl -LsSf https://astral.sh/uv/install.sh | sh
 
+   # Install project dependencies:
+   uv sync
+   ```
+
+3. **Configure your API key**
+   ```bash
+   cp .env.example .env
+   # Edit .env and add your Apify API key
+   # Get your free API key at: https://apify.com?fpr=9n7kx3
+   ```
+
+4. **Run the example**
+   ```bash
+   uv run python youtube-transcripts-api.py
+   ```
+
+### Alternative: set the API key directly
 ```bash
-git clone <your-repo-url>
-cd Apify-Youtube-Transcripts-API
+export APIFY_API_TOKEN="your_api_key_here"
+uv run python youtube-transcripts-api.py
 ```
 
-#### 2. Create and activate a virtual environment (using `uv`, recommended)
+## Why Use This YouTube Transcripts API?
 
-```bash
-# Create a virtual environment
-uv venv
+**Two transcript formats.** Each video returns a timestamped caption list and a plain-text version, so you can build interactive players or feed clean text straight into search and analysis.
 
-# Activate the virtual environment
-# On macOS/Linux:
-source .venv/bin/activate
-# On Windows:
-.venv\Scripts\activate
-```
+**Many URL formats.** Standard videos, Shorts, youtu.be short links, embed URLs, and mobile URLs all work.
 
-#### 3. Install dependencies
+**Batch in parallel.** Pass an array of URLs and each is processed in parallel; invalid URLs are recorded as errors in the dataset without stopping the run.
 
-```bash
-uv pip install -r requirements.txt
-```
+**Language metadata.** Every record reports the transcript language, language code, and whether the captions were auto-generated.
 
-#### 4. Configure your API token
+**Predictable, pay-per-use pricing.** Billing is per video, not per second, with no subscription, which keeps both single and batch runs inexpensive.
 
-Create a `.env` file in the project root (or copy from an example if you have one):
+**Easy to automate.** Call it from Python in a few lines, or load it as an MCP tool so assistants like Claude and Cursor can pull transcripts for you on demand.
 
-```bash
-echo 'APIFY_API_TOKEN=your_api_token_here' > .env
-```
+## Features
 
-You can get your API token from your Apify account dashboard:  
-[`https://apify.com`](https://apify.com?fpr=9n7kx3).
+### Core Capabilities
+- **Single or batch input**: one URL as a string, or many as an array
+- **Broad URL support**: standard videos, Shorts, youtu.be, embed, and mobile URLs
+- **Timestamped captions** with text, start, and duration per segment
+- **Plain-text transcript** as a single string
+- **Per-video error handling**: invalid URLs are logged without failing the run
 
-Alternatively, set the environment variable directly:
+### Data Quality
+- **Two formats per video**: timestamped and plain text
+- **Language metadata**: language name, language code, and auto-generated flag
+- **Video duration** in seconds
+- **Success flag** on every record for easy filtering
+- **Consistent JSON** shape across every video
 
-```bash
-export APIFY_API_TOKEN="your_api_token_here"
-```
+## Usage Examples
 
-On Windows (PowerShell):
-
-```powershell
-$Env:APIFY_API_TOKEN="your_api_token_here"
-```
-
-#### 5. Run the example
-
-```bash
-python youtube-transcripts-api.py
-```
-
-The script will:
-
-- Trigger the `johnvc/youtubetranscripts` Actor on Apify.
-- Wait for the run to finish and store results in an Apify dataset.
-- Stream the resulting dataset records and print them to stdout.
-
----
-
-## 💡 What is the `johnvc/youtubetranscripts` Actor?
-
-The [`johnvc/youtubetranscripts`](https://apify.com/johnvc/youtubetranscripts?fpr=9n7kx3) Actor (YouTube Transcript Getter – Priced Per Video) extracts transcripts from YouTube videos with rich metadata.  
-According to the Actor documentation, it:
-
-- Supports **regular YouTube videos**, **YouTube Shorts**, and various URL formats.
-- Returns **timestamped** and **non‑timestamped** transcript variants.
-- Includes **language information**, language code, and translation metadata.
-- Charges **per video**, not per second, making pricing simple and predictable.  
-
-Example minimal input for a single video:
-
+### Single video
 ```json
 {
-  "youtube_url": "https://www.youtube.com/watch?v=p8gV_7zFN44"
+  "youtube_url": "https://www.youtube.com/watch?v=aircAruvnKk"
 }
 ```
 
-For full details, pricing, and the most up‑to‑date information, see the Apify Actor page:  
-[`https://apify.com/johnvc/youtubetranscripts`](https://apify.com/johnvc/youtubetranscripts?fpr=9n7kx3).
-
----
-
-## 📦 Example Input Payloads
-
-Below are some sample inputs you can use when running the Actor directly in Apify or via API.
-
-### Example 0: Single video
-
-```json
-{
-  "youtube_url": "https://www.youtube.com/watch?v=p8gV_7zFN44"
-}
-```
-
-### Example 1: Three videos (batch)
-
+### Multiple videos (batch)
 ```json
 {
   "youtube_url": [
-    "https://www.youtube.com/watch?v=5kcaHAuGxmY",
-    "https://www.youtube.com/watch?v=p8gV_7zFN44",
-    "https://www.youtube.com/watch?v=Wd_MUsNQDso"
+    "https://www.youtube.com/watch?v=aircAruvnKk",
+    "https://youtu.be/9bZkp7q19f0",
+    "https://www.youtube.com/shorts/abcdEFGhijk"
   ]
 }
 ```
 
-> **Note**: The examples above are taken directly from the Actor documentation on Apify:  
-> [`https://apify.com/johnvc/youtubetranscripts`](https://apify.com/johnvc/youtubetranscripts?fpr=9n7kx3).
+## Input Parameters
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `youtube_url` | `string` or `array` | Yes | - | One YouTube URL as a string, or several as an array. Works with standard videos, Shorts, youtu.be, embed, and mobile URLs. Each URL is processed in parallel. |
+
+## Output Format
+
+One item per video. The transcript text below is shown as a placeholder to respect content copyright; your own run returns the actual caption text.
+
+```json
+{
+  "video_id": "aircAruvnKk",
+  "language": "English",
+  "language_code": "en",
+  "is_generated": false,
+  "total_seconds": 1105.64,
+  "timestamped": [
+    { "text": "<caption segment text>", "start": 4.22, "duration": 1.18 }
+  ],
+  "non_timestamped": "<full transcript as a single plain-text string>",
+  "url": "https://www.youtube.com/watch?v=aircAruvnKk",
+  "timestamp": "2026-05-29T11:58:40",
+  "success": true
+}
+```
+
+The `timestamped` array holds one entry per caption segment with its `text`, `start`, and `duration` in seconds; `non_timestamped` is the full transcript as a single string. Language metadata (`language`, `language_code`, `is_generated`) and `total_seconds` describe the video, and `success` is `true` when a transcript was found. Invalid or unavailable URLs are returned with `success: false` and an error note instead.
 
 ---
 
-## 🔄 How the Example Script Works
+## Use as an MCP tool
 
-The included `youtube-transcripts-api.py` script:
+You can load the YouTube Transcripts API as an MCP tool so assistants call it for you. The MCP server URL preloads just this one Actor:
 
-- Loads your `APIFY_API_TOKEN` from the environment (using `python-dotenv` if available).
-- Initializes an `ApifyClient`.
-- Builds a simple `run_input` payload with a `youtube_url` value.
-- Calls the `johnvc/youtubetranscripts` Actor with the prepared input.
-- Iterates over the resulting dataset and prints each item to the console.
+```
+https://mcp.apify.com/?tools=actors,docs,johnvc/YoutubeTranscripts
+```
 
-You can customize the `run_input` in `youtube-transcripts-api.py` to:
+Authenticate with OAuth in the browser when offered, or with your Apify API token (the same `APIFY_API_TOKEN` used by the Python example). Get a token at https://console.apify.com/settings/integrations and a free Apify account at https://apify.com?fpr=9n7kx3 .
 
-- Change the **single `youtube_url` string** to a list of URLs.
-- Pass **multiple `youtube_url` values** (as shown in the docs) to process several videos in one run.
-- Integrate this logic into a larger application or data pipeline.
+## Install in Claude Cowork Desktop
 
-For the Apify Python client docs, see:  
-[`https://docs.apify.com/sdk/python`](https://docs.apify.com/sdk/python).
+![Install in Claude Cowork Desktop](https://raw.githubusercontent.com/johnisanerd/ApifyPublicData/main/assets/guides/install_mcp_into_claude_desktop.png)
+
+Cowork is the desktop app's automation mode. To give it the YouTube Transcripts API as a tool, add the Apify MCP server as a connector.
+
+1. Open the Claude desktop app and go to **Settings → Connectors** (or **Settings → Developer → Edit Config** to edit `claude_desktop_config.json` directly).
+   - macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
+   - Windows: `%APPDATA%\Claude\claude_desktop_config.json`
+2. Add the Apify MCP server, preloaded with only this Actor:
+
+```json
+{
+  "mcpServers": {
+    "apify": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://mcp.apify.com/?tools=actors,docs,johnvc/YoutubeTranscripts"
+      ]
+    }
+  }
+}
+```
+
+3. Restart the app. When Cowork first calls the tool, complete the OAuth prompt in your browser, or add your Apify API token in the connector settings to skip OAuth.
+4. In a Cowork chat, confirm the tool is available and ask it to run the YouTube Transcripts API.
+
+Download the desktop app and start a free trial: https://claude.ai/referral/uIlpa7nPLg
+More help: https://docs.apify.com/platform/integrations/claude-desktop
+
+## Install in Claude Code
+
+![Install in Claude Code](https://raw.githubusercontent.com/johnisanerd/ApifyPublicData/main/assets/guides/install_mcp_into_claude_code.png)
+
+Claude Code is the command-line tool. Add the Actor's MCP server with one command:
+
+```bash
+claude mcp add --transport http apify \
+  "https://mcp.apify.com/?tools=actors,docs,johnvc/YoutubeTranscripts"
+```
+
+To use a token instead of browser OAuth:
+
+```bash
+claude mcp add --transport http apify \
+  "https://mcp.apify.com/?tools=actors,docs,johnvc/YoutubeTranscripts" \
+  --header "Authorization: Bearer YOUR_APIFY_TOKEN"
+```
+
+Then verify with `claude mcp list`, or run `/mcp` inside a session. Ask Claude Code to call the YouTube Transcripts API.
+
+Try Claude Code free: https://claude.ai/referral/uIlpa7nPLg
+Claude Code MCP docs: https://code.claude.com/docs/en/mcp
+
+## Install in Claude (website)
+
+![Install in Claude (website)](https://raw.githubusercontent.com/johnisanerd/ApifyPublicData/main/assets/guides/install_mcp_into_claude_ai.png)
+
+On claude.ai you add Apify as a connector, then enable just this Actor's tool.
+
+1. Go to **Settings → Connectors → Browse connectors** and search for **Apify MCP server**. Install it (enable or update if prompted).
+2. When connecting, authenticate with your Apify API token, and enable the tool `johnvc/YoutubeTranscripts`.
+3. In any chat, open **+ → Connectors** and turn on **Apify**.
+4. Alternatively, choose **Add custom connector** and paste the full MCP URL `https://mcp.apify.com/?tools=actors,docs,johnvc/YoutubeTranscripts`, using OAuth when prompted.
+5. Ask Claude to run the YouTube Transcripts API.
+
+Open Claude on the web: https://claude.ai
+
+## Install in Cursor
+
+![Install in Cursor](https://raw.githubusercontent.com/johnisanerd/ApifyPublicData/main/assets/guides/install_mcp_into_cursor.png)
+
+Cursor reads MCP servers from a project file at `.cursor/mcp.json`.
+
+1. In your project, create `.cursor/mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "apify": {
+      "url": "https://mcp.apify.com/?tools=actors,docs,johnvc/YoutubeTranscripts"
+    }
+  }
+}
+```
+
+2. If you prefer token auth over browser OAuth, add a header:
+
+```json
+{
+  "mcpServers": {
+    "apify": {
+      "url": "https://mcp.apify.com/?tools=actors,docs,johnvc/YoutubeTranscripts",
+      "headers": { "Authorization": "Bearer YOUR_APIFY_TOKEN" }
+    }
+  }
+}
+```
+
+3. Open **Cursor → Settings → MCP** and confirm the **apify** server is connected (green dot).
+4. In Composer or Chat, ask Cursor to call the YouTube Transcripts API.
+
+New to Cursor? Get it here: https://cursor.com/referral?code=XQP4VBLI3NNX
+
+## Install in ChatGPT
+
+![Install in ChatGPT](https://raw.githubusercontent.com/johnisanerd/ApifyPublicData/main/assets/guides/install_mcp_into_ChatGPT.png)
+
+ChatGPT connects to the Apify MCP server through Developer mode (available on ChatGPT Pro, Plus, Business, Enterprise, and Education plans).
+
+1. Click your profile icon, then go to **Settings > Apps**. If you do not see a **Create app** button, open **Advanced settings** and enable **Developer mode**.
+2. Click **Create app** and fill out the form:
+   - **Name:** Apify
+   - **MCP Server URL:** `https://mcp.apify.com/?tools=actors,docs,johnvc/YoutubeTranscripts`
+   - **Authentication:** OAuth
+3. Click **Create** and authorize the connection with Apify.
+4. To use the app in a conversation, click **+** in the chat, choose **Developer mode**, and select **Apify**.
+
+More help: https://docs.apify.com/platform/integrations/mcp
 
 ---
 
-## 🧾 Output and Export
+[**Made with care**](https://apify.com/johnvc?fpr=9n7kx3)
 
-The Actor stores results in an Apify dataset.  
-From the dataset console link printed by the script (for example,  
-`https://console.apify.com/storage/datasets/<DATASET_ID>`), you can:
+*Use the YouTube Transcripts API to power content repurposing, search indexing, and research with reliable, structured captions.*
 
-- Inspect the transcripts for each video.
-- Download them as JSON, CSV, Excel, or other supported export formats.
-- Access them programmatically via the Apify Dataset API.
-
-For more about datasets and exports, see Apify documentation:  
-[`https://docs.apify.com/platform/storage/dataset`](https://docs.apify.com/platform/storage/dataset).
-
----
-
-## ❤️ Made with Apify
-
-Turn any YouTube content into structured, searchable text with the YouTube Transcripts API powered by Apify.  
-
-Last Updated: 2026.05.29
+Last Updated: 2026.05.30

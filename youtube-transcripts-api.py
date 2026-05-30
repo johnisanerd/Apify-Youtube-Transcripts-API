@@ -1,44 +1,56 @@
 """
-YouTube Transcripts API: Strongly‑typed Apify example.
+Example: call the YouTube Transcripts API Apify Actor from Python.
 
-This script demonstrates how to use the Apify Actor
-`johnvc/youtubetranscripts` to extract transcripts from one or more
-YouTube videos and stream the structured results.
+Get a free Apify API key at: https://apify.com?fpr=9n7kx3
+Set it in a .env file (see .env.example) or export APIFY_API_TOKEN.
 
-Actor docs: https://apify.com/johnvc/youtubetranscripts?fpr=9n7kx3
+The Actor extracts a transcript for each YouTube URL you pass, with both a
+timestamped caption list and a plain-text version, plus language metadata.
+Pricing is per video, so a single-video run is inexpensive.
 """
 
-from __future__ import annotations
-
 import os
-from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence
 
 from apify_client import ApifyClient
 from dotenv import load_dotenv
-import rich
 
 load_dotenv()
 
-def main():
+APIFY_API_TOKEN = os.getenv("APIFY_API_TOKEN")
+if not APIFY_API_TOKEN:
+    raise SystemExit(
+        "APIFY_API_TOKEN is not set. Copy .env.example to .env and add your key, "
+        "or run: export APIFY_API_TOKEN=your_api_key_here"
+    )
 
-    # Initialize the ApifyClient with your Apify API token
-    # Replace '<YOUR_API_TOKEN>' with your token.
-    client = ApifyClient(os.getenv("APIFY_API_TOKEN"))
+client = ApifyClient(APIFY_API_TOKEN)
 
-    # Prepare the Actor input
-    run_input = { "youtube_url": "https://www.youtube.com/watch?v=UMam9p487Ug" }
+# Pass one URL as a string, or several as a list to process them in one run.
+run_input = {
+    "youtube_url": "https://www.youtube.com/watch?v=aircAruvnKk",
+}
 
-    # Run the Actor and wait for it to finish
-    run = client.actor("johnvc/youtubetranscripts").call(run_input=run_input)
+print(f"Fetching transcript for: {run_input['youtube_url']}")
+run = client.actor("johnvc/YoutubeTranscripts").call(run_input=run_input)
 
-    # Fetch and print Actor results from the run's dataset (if there are any)
-    print("💾 Check your data here: https://console.apify.com/storage/datasets/" + run["defaultDatasetId"])
-    for item in client.dataset(run["defaultDatasetId"]).iterate_items():
-        print(item)
+if run is None:
+    raise SystemExit("The Actor run did not start. Check your API token and inputs.")
 
-if __name__ == "__main__":
-    # for run in range(1, 50):
-    #    print(f"Running for {run} times")
-    #    main()
-    main()
+for item in client.dataset(run.default_dataset_id).iterate_items():
+    if not item.get("success"):
+        print(f"\nFailed for {item.get('url', 'unknown URL')}: {item.get('error', 'unknown error')}")
+        continue
 
+    segments = item.get("timestamped") or []
+    full_text = item.get("non_timestamped") or ""
+
+    print(f"\nVideo:    {item.get('video_id', '')}")
+    print(f"Language: {item.get('language', '')} ({item.get('language_code', '')})")
+    print(f"Length:   {item.get('total_seconds', 0)} seconds")
+    print(f"Captions: {len(segments)} timestamped segments")
+    print(f"Transcript characters: {len(full_text)}")
+
+    # Show a short preview of the plain-text transcript.
+    preview = full_text[:200].replace("\n", " ").strip()
+    if preview:
+        print(f"\nPreview: {preview}...")

@@ -269,4 +269,4 @@ More help: https://docs.apify.com/platform/integrations/mcp
 
 *Use the YouTube Transcripts API to power content repurposing, search indexing, and research with reliable, structured captions.*
 
-Last Updated: 2026.06.15
+Last Updated: 2026.06.17
